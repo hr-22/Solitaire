@@ -29,7 +29,7 @@ A classic Klondike Solitaire game with a dark, stylish Balatro-inspired theme. B
 ## How to run
 
 1. Download or clone the folder
-2. Open `index.html` in any browser
+2. Open `https://hr-22.github.io/Solitaire/` in any browser
 
 ---
 
