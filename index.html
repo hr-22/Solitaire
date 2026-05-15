@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitaire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+    <div id="logo">♠ Solitaire</div>
+
+    <div class="stats-row">
+        <div class="stat">
+            <span class="stat-label">Score</span>
+            <span class="stat-value" id="score-el">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Time</span>
+            <span class="stat-value" id="timer-el">0:00</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Moves</span>
+            <span class="stat-value" id="moves-el">0</span>
+        </div>
+    </div>
+
+    <div class="btn-row">
+        <button class="btn" onclick="undo()">↩ Undo</button>
+        <button class="btn" onclick="newGame()">New Game</button>
+        <button class="btn" onclick="showHow()">How to Play</button>
+    </div>
+</div>
+
+<!-- ── GAME AREA ── -->
+<div id="game-area">
+
+    <!-- Top row: stock, waste, gap, four foundations -->
+    <div id="top-row">
+        <div id="stock-waste">
+            <!-- Stock pile — click to draw -->
+            <div class="pile-slot" id="stock">
+                <span class="empty-icon">♻</span>
+                <span id="stock-count"></span>
+            </div>
+            <!-- Waste pile — shows the drawn card -->
+            <div class="pile-slot" id="waste">
+                <span class="empty-icon">·</span>
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- Four foundation piles, one per suit -->
+        <div id="foundations">
+            <div class="pile-slot" id="f0"><span class="empty-icon">♠</span></div>
+            <div class="pile-slot" id="f1"><span class="empty-icon">♥</span></div>
+            <div class="pile-slot" id="f2"><span class="empty-icon">♦</span></div>
+            <div class="pile-slot" id="f3"><span class="empty-icon">♣</span></div>
+        </div>
+    </div>
+
+    <!-- Seven tableau columns -->
+    <div id="tableau">
+        <div class="tab-col" id="t0"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t1"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t2"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t3"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t4"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t5"><span class="empty-icon">K</span></div>
+        <div class="tab-col" id="t6"><span class="empty-icon">K</span></div>
+    </div>
+</div>
+
+<!-- Invisible layer that the dragged card clone floats on -->
+<div id="drag-layer"></div>
+
+<!-- ── WIN MODAL ── -->
+<div class="modal-bg" id="win-modal">
+    <div class="modal-box">
+        <h2>🏆 You Won!</h2>
+        <span class="win-pts" id="win-pts">0</span>
+        <div class="win-info">Final Score</div>
+        <p class="win-sub" id="win-time"></p>
+        <p class="win-sub" id="win-moves"></p>
+        <div class="modal-cta">
+            <button class="btn" onclick="newGame(); closeModal('win-modal')">Play Again</button>
+        </div>
+    </div>
+</div>
+
+<!-- HOW TO PLAY MODAL -->
+<div class="modal-bg" id="how-modal">
+    <div class="modal-box">
+        <button class="x-btn" onclick="closeModal('how-modal')">✕</button>
+        <h2>How to Play</h2>
+
+        <p class="sec-hd">Goal</p>
+        <p>Move all 52 cards to the four foundation piles, sorted by suit from Ace to King.</p>
+
+        <p class="sec-hd">Tableau rules</p>
+        <ul>
+            <li>Cards must alternate red / black in colour.</li>
+            <li>Each card must be one rank lower than the card it goes on.</li>
+            <li>Only a King can start an empty column.</li>
+            <li>Click a face-down card to flip it.</li>
+        </ul>
+
+        <p class="sec-hd">Foundation rules</p>
+        <ul>
+            <li>Start each foundation with an Ace of that suit.</li>
+            <li>Build up in the same suit: A → 2 → … → K.</li>
+            <li>Double-click any eligible card to send it automatically.</li>
+        </ul>
+
+        <p class="sec-hd">Drawing cards</p>
+        <ul>
+            <li>Click the stock pile (top-left) to flip one card to the waste.</li>
+            <li>When the stock is empty, clicking it resets the waste back to stock (−100 pts).</li>
+        </ul>
+
+        <p class="sec-hd">Scoring</p>
+        <ul>
+            <li>Waste → Tableau: <strong>+5</strong></li>
+            <li>Any card → Foundation: <strong>+10</strong></li>
+            <li>Foundation → Tableau: <strong>−15</strong></li>
+            <li>Flip a card: <strong>+5</strong></li>
+            <li>Recycling stock: <strong>−100</strong></li>
+        </ul>
+
+        <div class="modal-cta">
+            <button class="btn" onclick="closeModal('how-modal')">Got it</button>
+        </div>
+    </div>
+</div>
+
+<!-- Load scripts in dependency order -->
+<script src="js/constants.js"></script>
+<script src="js/state.js"></script>
+<script src="js/deal.js"></script>
+<script src="js/move.js"></script>
+<script src="js/render.js"></script>
+<script src="js/drag.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
